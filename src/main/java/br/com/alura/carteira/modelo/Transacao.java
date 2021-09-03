@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import lombok.ToString;
 @ToString(exclude = {"data", "quantidade", "tipo"})
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "transacoes")
 public class Transacao {
@@ -59,6 +61,10 @@ public class Transacao {
 				this.quantidade = quantidade;
 				this.tipo = tipo;
 		
+	}
+
+	public boolean pertenceAo(Usuario usuario) {
+		return this.usuario.equals(usuario);
 	}
 
 }
