@@ -42,10 +42,10 @@ public class VerificacaoTokenFilter extends OncePerRequestFilter {
 		if (tokenService.isValido(token)) {
 			// recupera o id do usuario que foi guardado dentro do token e carrega o usuario do banco de dados
 			Long idUsuario = tokenService.extrairIdDoUsuario(token);
-			Usuario usuario = usuarioRepository.findById(idUsuario).get();
+			Usuario usuario = usuarioRepository.carregarPorIdComPerfis(idUsuario);
 			
 			// indica para o Spring que o usuario esta logado para essa requisicao
-			Authentication autenticacao = new UsernamePasswordAuthenticationToken(usuario, null, null);
+			Authentication autenticacao = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(autenticacao);
 		}
 		
